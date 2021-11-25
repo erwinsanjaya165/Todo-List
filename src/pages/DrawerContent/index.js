@@ -1,14 +1,6 @@
 import React, {Component} from 'react';
 import {View, Alert} from 'react-native';
-import {
-  Avatar,
-  Title,
-  Text,
-  Caption,
-  Drawer,
-  TouchableRipple,
-  Switch,
-} from 'react-native-paper';
+import {Avatar, Title, Caption, Drawer} from 'react-native-paper';
 import {Gambar} from '../../assets';
 import {styles} from '../../Styles/DrawerContent';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -25,8 +17,6 @@ export default class DrawerContent extends Component {
       note: '',
       token: '',
       loading: false,
-      modal: false,
-      switchValue: false,
     };
   }
 
@@ -39,30 +29,9 @@ export default class DrawerContent extends Component {
           this.props.navigation.replace('Login');
         }
       })
-      .then(() => this.getTodo())
       .catch(err => {
         console.log(err);
       });
-  }
-
-  getTodo() {
-    fetch('https://api-todoapp-pp.herokuapp.com/api/todo', {
-      method: 'GET',
-      redirect: 'follow',
-      headers: {
-        Authorization: `bearer ${this.state.token}`,
-      },
-    })
-      .then(response => response.json())
-      .then(responseJson => {
-        console.log(responseJson);
-        this.setState({data: responseJson.data});
-        console.log(this.state.data);
-      })
-      .catch(err => {
-        console.log(err);
-      })
-      .finally(() => this.setState({loading: false}));
   }
 
   logout() {
@@ -126,17 +95,6 @@ export default class DrawerContent extends Component {
                 onPress={() => this.props.navigation.navigate('Tambah')}
               />
             </Drawer.Section>
-            {/* <Drawer.Section title="Preferences">
-              <TouchableRipple>
-                <View style={styles.preference}>
-                  <Text>Dark Theme</Text>
-                  <Switch
-                    value={this.state.switchValue}
-                    onValueChange={switchValue => this.setState({switchValue})}
-                  />
-                </View>
-              </TouchableRipple>
-            </Drawer.Section> */}
           </View>
         </DrawerContentScrollView>
         <Drawer.Section style={styles.bottomDrawerSection}>

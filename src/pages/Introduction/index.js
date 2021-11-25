@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Text, View, Image, TouchableOpacity} from 'react-native';
 import {styles} from '../../Styles/Introduction';
+
 export default class Introduction extends Component {
   render() {
     return (

@@ -32,7 +32,7 @@ export const DataConfirmPassword = () =>
   );
 
 export const DataFinis = () =>
-  Alert.alert('Selesai !', 'Success', [
+  Alert.alert('Success !', [
     {
       text: 'Ok',
     },

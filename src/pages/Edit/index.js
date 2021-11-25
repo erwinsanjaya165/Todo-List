@@ -17,7 +17,6 @@ export default class edit extends Component {
     this.state = {
       data: [],
       loading: false,
-      modal: false,
       id: '',
       title: '',
       note: '',
