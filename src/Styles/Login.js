@@ -34,8 +34,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   input: {
-    left: 35,
-    width: 310,
+    marginLeft: 40,
+    width: '75%',
     height: 48,
   },
   icon: {

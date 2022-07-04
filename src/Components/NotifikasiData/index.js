@@ -31,13 +31,6 @@ export const DataConfirmPassword = () =>
     ],
   );
 
-export const DataFinis = () =>
-  Alert.alert('Success !', [
-    {
-      text: 'Ok',
-    },
-  ]);
-
 export const PasswordLogin = () =>
   Alert.alert('Password & email !', 'not respond', [
     {

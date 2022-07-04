@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Alert} from 'react-native';
 import {Avatar, Title, Caption, Drawer} from 'react-native-paper';
-import {Gambar} from '../../assets';
+import {foto} from '../../assets';
 import {styles} from '../../Styles/DrawerContent';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -45,6 +45,7 @@ export default class DrawerContent extends Component {
       .then(response => response.json())
       .then(responseJson => {
         console.log(responseJson);
+        AsyncStorage.removeItem('token');
         this.props.navigation.replace('Login');
       })
       .catch(err => {
@@ -72,7 +73,7 @@ export default class DrawerContent extends Component {
           <View style={styles.drawerContent}>
             <View style={styles.userInfoSection}>
               <View style={{flexDirection: 'row', marginTop: 20}}>
-                <Avatar.Image source={Gambar} size={50} />
+                <Avatar.Image source={foto} size={50} />
                 <View style={{marginLeft: 15, flexDirection: 'column'}}>
                   <Title style={styles.title}>Erwin Sanjaya</Title>
                   <Caption style={styles.caption}>My App</Caption>

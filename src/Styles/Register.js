@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
   },
   textInput: {
     left: 35,
-    width: 310,
+    width: '75%',
     height: 48,
   },
   icon: {

@@ -5,13 +5,13 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import {
   DataKsong,
   DataEmail,
   DataPassword,
   DataConfirmPassword,
-  DataFinis,
 } from '../../Components/NotifikasiData/index';
 import {TextInputReg} from '../../Components';
 import {styles} from '../../Styles/Register';
@@ -65,7 +65,9 @@ export default class Register extends Component {
         } else if (this.state.password !== this.state.password_confirmation) {
           DataConfirmPassword();
         } else {
-          DataFinis();
+          Alert.alert('', 'Register Success', [], {
+            cancelable: true,
+          });
           this.props.navigation.goBack();
         }
       })
@@ -133,8 +135,7 @@ export default class Register extends Component {
             </TouchableOpacity>
             <View style={styles.boxReady}>
               <Text style={styles.textReady}>Already have a account? </Text>
-              <TouchableOpacity
-                onPress={() => this.props.navigation.goBack('Login')}>
+              <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                 <Text style={styles.textLogin}>Login</Text>
               </TouchableOpacity>
             </View>

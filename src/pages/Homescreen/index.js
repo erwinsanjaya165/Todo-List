@@ -43,7 +43,7 @@ export default class Homescreen extends Component {
     })
       .then(response => response.json())
       .then(responseJson => {
-        console.log(responseJson);
+        console.log('inikah yang eror', responseJson);
         this.setState({data: responseJson.data});
       })
       .catch(err => {
@@ -105,7 +105,7 @@ export default class Homescreen extends Component {
         </View>
         <ScrollView>
           <View style={styles.boxCatatan}>
-            {this.state.data.map((value, index) => (
+            {this.state?.data?.map((value, index) => (
               <TouchableOpacity
                 key={index}
                 onPress={() => {

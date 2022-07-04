@@ -4,8 +4,14 @@ import {Warna_Background} from '../../Utils';
 import {TextInputLog} from '../../Components';
 import {Email, Eye, PadLock} from '../../assets';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {DataFinis, PasswordLogin} from '../../Components/NotifikasiData';
-import {Text, View, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {PasswordLogin} from '../../Components/NotifikasiData';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  ActivityIndicator,
+  Alert,
+} from 'react-native';
 
 export default class Login extends Component {
   state = {
@@ -16,39 +22,54 @@ export default class Login extends Component {
   };
 
   login() {
-    this.setState({loading: true});
-    const {email, password} = this.state;
+    if (this.state.email == '') {
+      Alert.alert('Email !', 'Anda belum mengisi email');
+    } else if (
+      this.state.email.split('@')[1] !== 'email.com' &&
+      this.state.email.split('@')[1] !== 'gmail.com'
+    ) {
+      Alert.alert('Email !', 'Email yang anda masukkan salah');
+    } else if (this.state.password == '') {
+      Alert.alert('Password !', 'Anda belum mengisi password');
+    } else if (this.state.password.length < 6) {
+      Alert.alert('Password !', 'Password minimal 6 karakter');
+    } else {
+      this.setState({loading: true});
+      const {email, password} = this.state;
 
-    const dataTosend = {
-      email: email,
-      password: password,
-    };
+      const dataTosend = {
+        email: email,
+        password: password,
+      };
 
-    fetch('https://api-todoapp-pp.herokuapp.com/api/auth/login', {
-      method: 'POST',
-      redirect: 'follow',
-      body: JSON.stringify(dataTosend),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .then(result => {
-        console.log(result.token.original.access_token);
-        const {role_data} = result;
-        if (role_data) {
+      fetch('https://api-todoapp-pp.herokuapp.com/api/auth/login', {
+        method: 'POST',
+        redirect: 'follow',
+        body: JSON.stringify(dataTosend),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(response => response.json())
+        .then(result => {
+          console.log(result.token.original.access_token);
           AsyncStorage.setItem('token', result.token.original.access_token);
-          DataFinis();
-          this.props.navigation.replace('Homescreen');
-        } else {
+          if (result.status === 'success') {
+            Alert.alert('', 'Login Success', [], {cancelable: true});
+            this.props.navigation.replace('Homescreen');
+          } else {
+            Alert.alert(
+              'Perhatian !',
+              'Akun anda belum terdaftar, silahkan register terlebih dahulu',
+            );
+          }
+        })
+        .catch(err => {
+          console.log(err);
           PasswordLogin();
-        }
-      })
-      .catch(err => {
-        console.log(err);
-        PasswordLogin();
-      })
-      .finally(() => this.setState({loading: false}));
+        })
+        .finally(() => this.setState({loading: false}));
+    }
   }
   render() {
     return (
@@ -59,7 +80,6 @@ export default class Login extends Component {
           <TextInputLog
             gambar={Email}
             judul="Email"
-            keyboard="email-address"
             onChangeText={email => this.setState({email})}
           />
           <TextInputLog
@@ -71,9 +91,9 @@ export default class Login extends Component {
             onChangeText={password => this.setState({password})}
             mata={Eye}
           />
-          <TouchableOpacity style={styles.boxFor}>
+          <View style={styles.boxFor}>
             <Text style={styles.textFor}>Forgot Password?</Text>
-          </TouchableOpacity>
+          </View>
           <TouchableOpacity
             style={styles.boxLogin}
             onPress={() => this.login()}>

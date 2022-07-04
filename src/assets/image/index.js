@@ -1,5 +1,5 @@
 import Foto from './image.png';
-import Gambar from './gambar.jpg';
 import Note from './note.png';
+import foto from './fotoku.jpg';
 
-export {Foto, Gambar, Note};
+export {Foto, Note, foto};
